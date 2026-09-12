@@ -6,9 +6,8 @@ class AddNewNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(11.0),
-      child: Container(
-        padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(15.0),
+      child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -19,22 +18,38 @@ class AddNewNote extends StatelessWidget {
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    hintText: "Title",
+                    hintText: "Title:",
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                   ),
                 ),
                 SizedBox(height: 25),
                 TextField(
+                  maxLines: 5,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    hintText: "Content",
+                    hintText: "Content:",
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
+                    disabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.white),
+                    ),
                   ),
                 ),
               ],
             ),
+            SizedBox(height: 195),
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                
+              },
               child: Container(
                 width: double.infinity,
                 height: 45,
@@ -54,6 +69,7 @@ class AddNewNote extends StatelessWidget {
                 ),
               ),
             ),
+            SizedBox(height: 9),
           ],
         ),
       ),
