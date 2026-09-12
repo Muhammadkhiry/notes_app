@@ -21,7 +21,7 @@ class EditNoteView extends StatelessWidget {
                   },
                   icon: Icon(Icons.arrow_back),
                 ),
-                CustomAppBar(title: "Edit", icon: Icons.edit),
+                CustomAppBar(title: "Edit", icon: Icons.check_sharp),
               ],
             ),
             EditNoteBody(),
