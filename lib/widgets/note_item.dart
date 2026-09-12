@@ -5,37 +5,54 @@ class NoteItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.yellow,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          ListTile(
-            title: Text(
-              "Flutter tips",
-              style: TextStyle(color: Colors.black, fontSize: 32),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 7),
+      child: Container(
+        padding: EdgeInsets.all(11),
+        decoration: BoxDecoration(
+          color: Color(0xffFFCD7A),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            ListTile(
+              title: Padding(
+                padding: const EdgeInsets.only(bottom: 15.0),
+                child: Text(
+                  "Flutter tips",
+                  style: TextStyle(color: Colors.black, fontSize: 32),
+                ),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(bottom: 15.0),
+                child: Text(
+                  "Build your career",
+                  style: TextStyle(
+                    color: Colors.black.withOpacity(0.5),
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              trailing: IconButton(
+                onPressed: () {},
+                icon: Image.asset(
+                  "assets/icons/trash-bin.png",
+                  color: Colors.black,
+                  height: 30,
+                  width: 30,
+                ),
+              ),
             ),
-            subtitle: Text(
-              "     Build your career",
-              style: TextStyle(color: Colors.grey[600], fontSize: 16),
-            ),
-            trailing: IconButton(
-              onPressed: () {},
-              icon: Icon(Icons.delete),
-              color: Colors.black,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 11, right: 13),
-            child: Text(
+            Text(
               "date",
-              style: TextStyle(color: Colors.grey[600], fontSize: 14),
+              style: TextStyle(
+                color: Colors.black.withOpacity(0.5),
+                fontSize: 14,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
