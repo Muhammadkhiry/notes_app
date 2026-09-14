@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/cubits/add_note_cubit/add_note_cubit.dart';
+import 'package:note_app/models/note_model.dart';
 
 class AddNoteForm extends StatefulWidget {
   const AddNoteForm({super.key});
@@ -13,7 +16,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   String? title;
-  String? content;
+  String? subTitle;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
                       return null;
                     },
                     onSaved: (value) {
-                      content = value;
+                      subTitle = value;
                     },
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -82,6 +85,15 @@ class _AddNoteFormState extends State<AddNoteForm> {
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     formKey.currentState!.save();
+
+                    NoteModel note = NoteModel(
+                      title: title!,
+                      subTitle: subTitle!,
+                      date: DateTime.now().toString(),
+                      color: Colors.blue.value,
+                    );
+
+                    BlocProvider.of<AddNoteCubit>(context).addNote(note);
                   } else {
                     setState(() {
                       autovalidateMode = AutovalidateMode.always;
