@@ -39,6 +39,7 @@ dependencies:
   flutter_bloc: ^9.1.1
   meta: ^1.19.0
   modal_progress_hud_nsn: ^0.5.1
+  intl: ^0.20.3
 
 dev_dependencies:
   flutter_test:

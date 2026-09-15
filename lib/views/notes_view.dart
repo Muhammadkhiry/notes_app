@@ -4,9 +4,15 @@ import 'package:note_app/cubits/read_notes_cubit/read_notes_cubit.dart';
 import 'package:note_app/widgets/add_new_note.dart';
 import 'package:note_app/widgets/notes_view_body.dart';
 
-class NotesView extends StatelessWidget {
+class NotesView extends StatefulWidget {
   const NotesView({super.key});
 
+  @override
+  State<NotesView> createState() => _NotesViewState();
+}
+
+class _NotesViewState extends State<NotesView> {
+  
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
