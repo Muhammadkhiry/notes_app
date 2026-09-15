@@ -9,22 +9,25 @@ class AddNewNote extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: BlocConsumer<AddNoteCubit, AddNoteState>(
-        listener: (context, state) {
-          if (state is AddNoteSucceeded) {
-            Navigator.pop(context);
-          }
-          if (state is AddNoteFailure) {
-            print("object");
-          }
-        },
-        builder: (context, state) {
-          return ModalProgressHUD(
-            inAsyncCall: state is AddNoteLoading ? true : false,
-            child: AddNoteForm(),
-          );
-        },
+    return BlocProvider(
+      create: (context) => AddNoteCubit(),
+      child: SingleChildScrollView(
+        child: BlocConsumer<AddNoteCubit, AddNoteState>(
+          listener: (context, state) {
+            if (state is AddNoteSucceeded) {
+              Navigator.pop(context);
+            }
+            if (state is AddNoteFailure) {
+              print("object");
+            }
+          },
+          builder: (context, state) {
+            return ModalProgressHUD(
+              inAsyncCall: state is AddNoteLoading ? true : false,
+              child: AddNoteForm(),
+            );
+          },
+        ),
       ),
     );
   }
