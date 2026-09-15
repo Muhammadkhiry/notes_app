@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:note_app/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:note_app/widgets/add_note_form.dart';
 
@@ -12,7 +11,7 @@ class AddNewNote extends StatelessWidget {
     return BlocProvider(
       create: (context) => AddNoteCubit(),
       child: SingleChildScrollView(
-        child: BlocConsumer<AddNoteCubit, AddNoteState>(
+        child: BlocListener<AddNoteCubit, AddNoteState>(
           listener: (context, state) {
             if (state is AddNoteSucceeded) {
               Navigator.pop(context);
@@ -21,12 +20,11 @@ class AddNewNote extends StatelessWidget {
               print("object");
             }
           },
-          builder: (context, state) {
-            return ModalProgressHUD(
-              inAsyncCall: state is AddNoteLoading ? true : false,
-              child: AddNoteForm(),
-            );
-          },
+
+          child: AbsorbPointer(
+            absorbing: State is AddNoteLoading ? true : false,
+            child: AddNoteForm(),
+          ),
         ),
       ),
     );

@@ -12,11 +12,12 @@ class AddNoteForm extends StatefulWidget {
 
 class _AddNoteFormState extends State<AddNoteForm> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
   AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
 
   String? title;
   String? subTitle;
+
+  _AddNoteFormState();
 
   @override
   Widget build(BuildContext context) {
@@ -76,45 +77,51 @@ class _AddNoteFormState extends State<AddNoteForm> {
               ],
             ),
 
-            const SizedBox(height: 185),
+            const SizedBox(height: 95),
 
             SizedBox(
               width: double.infinity,
               height: 45,
-              child: ElevatedButton(
-                onPressed: () {
-                  if (formKey.currentState!.validate()) {
-                    formKey.currentState!.save();
+              child: State is AddNoteLoading
+                  ? SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: CircularProgressIndicator(color: Colors.black),
+                    )
+                  : ElevatedButton(
+                      onPressed: () {
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
 
-                    NoteModel note = NoteModel(
-                      title: title!,
-                      subTitle: subTitle!,
-                      date: DateTime.now().toString(),
-                      color: Colors.blue.value,
-                    );
+                          NoteModel note = NoteModel(
+                            title: title!,
+                            subTitle: subTitle!,
+                            date: DateTime.now().toString(),
+                            color: Colors.blue.value,
+                          );
 
-                    BlocProvider.of<AddNoteCubit>(context).addNote(note);
-                  } else {
-                    setState(() {
-                      autovalidateMode = AutovalidateMode.always;
-                    });
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-                child: const Text(
-                  "Add",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 21,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+                          BlocProvider.of<AddNoteCubit>(context).addNote(note);
+                        } else {
+                          setState(() {
+                            autovalidateMode = AutovalidateMode.always;
+                          });
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      child: const Text(
+                        "Add",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 21,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
             ),
 
             const SizedBox(height: 9),
