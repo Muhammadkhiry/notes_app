@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:note_app/cubits/read_notes_cubit/read_notes_cubit.dart';
 import 'package:note_app/widgets/note_item.dart';
 
 class NotesListView extends StatelessWidget {
@@ -6,15 +8,19 @@ class NotesListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15.0),
-      child: ListView.builder(
-        padding: EdgeInsets.zero,
-        itemCount: 11,
-        itemBuilder: (BuildContext context, int index) {
-          return NoteItem();
-        },
-      ),
+    return BlocBuilder<ReadNotesCubit, ReadNotesState>(
+      builder: (context, state) {
+        return Padding(
+          padding: const EdgeInsets.symmetric(vertical: 15.0),
+          child: ListView.builder(
+            padding: EdgeInsets.zero,
+            itemCount: state is ReadNotesSucceeded ? state.notes.length : 0,
+            itemBuilder: (BuildContext context, int index) {
+              return NoteItem();
+            },
+          ),
+        );
+      },
     );
   }
 }

@@ -5,26 +5,26 @@ import 'package:note_app/widgets/add_note_form.dart';
 
 class AddNewNote extends StatelessWidget {
   const AddNewNote({super.key});
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => AddNoteCubit(),
       child: SingleChildScrollView(
-        child: BlocListener<AddNoteCubit, AddNoteState>(
+        child: BlocConsumer<AddNoteCubit, AddNoteState>(
           listener: (context, state) {
             if (state is AddNoteSucceeded) {
               Navigator.pop(context);
             }
             if (state is AddNoteFailure) {
-              print("object");
+              print(state.errMessage);
             }
           },
-
-          child: AbsorbPointer(
-            absorbing: State is AddNoteLoading ? true : false,
-            child: AddNoteForm(),
-          ),
+          builder: (context, state) {
+            return AbsorbPointer(
+              absorbing: state is AddNoteLoading,
+              child: AddNoteForm(),
+            );
+          },
         ),
       ),
     );

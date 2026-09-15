@@ -5,8 +5,8 @@ sealed class ReadNotesState {}
 
 final class ReadNotesInitial extends ReadNotesState {}
 
-final class ReadNotesLoading extends ReadNotesState {}
+final class ReadNotesSucceeded extends ReadNotesState {
+  final List<NoteModel> notes;
 
-final class ReadNotesSucceeded extends ReadNotesState {}
-
-final class ReadNotesFailure extends ReadNotesState {}
+  ReadNotesSucceeded({required this.notes});
+}
