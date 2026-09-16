@@ -17,8 +17,18 @@ class _AddNoteFormState extends State<AddNoteForm> {
 
   String? title;
   String? subTitle;
+  final titleFocusNode = FocusNode();
+  final subtitleFocusNode = FocusNode();
+  bool isLoading = false;
 
   _AddNoteFormState();
+
+  @override
+  void dispose() {
+    titleFocusNode.dispose();
+    subtitleFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,15 +44,25 @@ class _AddNoteFormState extends State<AddNoteForm> {
                 SizedBox(
                   height: 75,
                   child: TextFormField(
+                    keyboardType: TextInputType.text,
+                    focusNode: titleFocusNode,
+                    textInputAction: TextInputAction.next,
+
+                    onFieldSubmitted: (_) {
+                      subtitleFocusNode.requestFocus();
+                    },
+
                     validator: (value) {
                       if (value?.isEmpty ?? true) {
                         return "This field is required";
                       }
                       return null;
                     },
+
                     onSaved: (value) {
                       title = value;
                     },
+
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -57,7 +77,10 @@ class _AddNoteFormState extends State<AddNoteForm> {
                 SizedBox(
                   height: 155,
                   child: TextFormField(
+                    keyboardType: TextInputType.multiline,
+                    focusNode: subtitleFocusNode,
                     maxLines: 5,
+                    textInputAction: TextInputAction.newline,
                     validator: (value) {
                       if (value?.isEmpty ?? true) {
                         return "This field is required";
@@ -80,51 +103,60 @@ class _AddNoteFormState extends State<AddNoteForm> {
 
             const SizedBox(height: 95),
 
-            SizedBox(
-              width: double.infinity,
-              height: 45,
-              child: State is AddNoteLoading
-                  ? SizedBox(
-                      height: 25,
-                      width: 25,
-                      child: CircularProgressIndicator(color: Colors.black),
-                    )
-                  : ElevatedButton(
-                      onPressed: () {
-                        if (formKey.currentState!.validate()) {
-                          formKey.currentState!.save();
+            BlocListener<AddNoteCubit, AddNoteState>(
+              listener: (BuildContext context, state) {
+                if (state is AddNoteLoading) {
+                  isLoading = true;
+                } else {
+                  isLoading = false;
+                }
+              },
+              child: SizedBox(
+                width: double.infinity,
+                height: 45,
+                child: isLoading is AddNoteLoading
+                    ? SizedBox(
+                        height: 25,
+                        width: 25,
+                        child: CircularProgressIndicator(color: Colors.black),
+                      )
+                    : ElevatedButton(
+                        onPressed: () {
+                          if (formKey.currentState!.validate()) {
+                            formKey.currentState!.save();
 
-                          NoteModel note = NoteModel(
-                            title: title!,
-                            subTitle: subTitle!,
-                            date: DateFormat.yMMMEd()
-                                .format(DateTime.now())
-                                .toString(),
-                            color: Colors.blue.value,
-                          );
+                            NoteModel note = NoteModel(
+                              title: title!,
+                              subTitle: subTitle!,
+                              date: DateFormat.yMMMEd().format(DateTime.now()),
+                              color: Colors.blue.value,
+                            );
 
-                          BlocProvider.of<AddNoteCubit>(context).addNote(note);
-                        } else {
-                          setState(() {
-                            autovalidateMode = AutovalidateMode.always;
-                          });
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.white,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
+                            BlocProvider.of<AddNoteCubit>(
+                              context,
+                            ).addNote(note);
+                          } else {
+                            setState(() {
+                              autovalidateMode = AutovalidateMode.always;
+                            });
+                          }
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                        ),
+                        child: const Text(
+                          "Add",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 21,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      child: const Text(
-                        "Add",
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 21,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+              ),
             ),
 
             const SizedBox(height: 9),
