@@ -21,7 +21,19 @@ class _AddNoteFormState extends State<AddNoteForm> {
   final subtitleFocusNode = FocusNode();
   bool isLoading = false;
 
-  _AddNoteFormState();
+  final List<int> colors = [
+    const Color(0xFFFFCDD2).value, // Soft Red
+    const Color(0xFFFFE0B2).value, // Soft Orange
+    const Color(0xFFFFF9C4).value, // Soft Yellow
+    const Color(0xFFC8E6C9).value, // Soft Green
+    const Color(0xFFB2DFDB).value, // Soft Teal
+    const Color(0xFFB3E5FC).value, // Soft Blue
+    const Color(0xFFC5CAE9).value, // Soft Indigo
+    const Color(0xFFD1C4E9).value, // Soft Purple
+    const Color(0xFFF8BBD0).value, // Soft Pink
+    const Color(0xFFD7CCC8).value, // Soft Brown
+  ];
+  int? noteColor;
 
   @override
   void dispose() {
@@ -100,8 +112,47 @@ class _AddNoteFormState extends State<AddNoteForm> {
                 ),
               ],
             ),
+            SizedBox(height: 9),
+            SizedBox(
+              height: 50,
+              width: double.infinity,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: colors.map((color) {
+                  final isSelected = noteColor == color;
 
-            const SizedBox(height: 95),
+                  return Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          noteColor = color;
+                        });
+                      },
+                      child: Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          Container(
+                            height: 37,
+                            width: 37,
+                            decoration: BoxDecoration(
+                              color: Color(color),
+                              shape: BoxShape.circle,
+                            ),
+                          ),
+                          if (isSelected)
+                            const Icon(
+                              Icons.check,
+                              size: 18,
+                              color: Colors.black,
+                            ),
+                        ],
+                      ),
+                    ),
+                  );
+                }).toList(),
+              ),
+            ),
+            const SizedBox(height: 85),
 
             BlocListener<AddNoteCubit, AddNoteState>(
               listener: (BuildContext context, state) {
@@ -129,7 +180,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
                               title: title!,
                               subTitle: subTitle!,
                               date: DateFormat.yMMMEd().format(DateTime.now()),
-                              color: Colors.blue.value,
+                              color: noteColor ?? Colors.cyan.value,
                             );
 
                             BlocProvider.of<AddNoteCubit>(
