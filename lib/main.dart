@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:note_app/consts.dart';
 import 'package:note_app/cubits/read_notes_cubit/read_notes_cubit.dart';
 import 'package:note_app/models/note_model.dart';
 import 'package:note_app/simple_bloc_observer.dart';
-import 'package:note_app/views/notes_view.dart';
+import 'package:note_app/views/splash_view.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   Bloc.observer = SimpleBlocObserver();
+
   // Initialize Hive
   await Hive.initFlutter();
   Hive.registerAdapter(NoteModelAdapter());
@@ -22,7 +25,6 @@ void main() async {
 class NotesApp extends StatelessWidget {
   const NotesApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -30,7 +32,7 @@ class NotesApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(fontFamily: "Poppins", brightness: Brightness.dark),
-        home: const NotesView(),
+        home: const SplashView(),
       ),
     );
   }

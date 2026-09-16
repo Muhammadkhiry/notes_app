@@ -1,61 +1,89 @@
 # 📝 Notes App
 
-<div align="center">
+A modern and simple Flutter Notes application built with **Flutter**, **Hive**, and **Cubit**.
 
-### A clean and modern Flutter notes application for creating, editing, and managing notes locally.
-
-<br>
-
-![Flutter](https://img.shields.io/badge/Flutter-3.44.0-02569B?style=for-the-badge&logo=flutter&logoColor=white)
-![Dart](https://img.shields.io/badge/Dart-3.12.0-0175C2?style=for-the-badge&logo=dart&logoColor=white)
-![BLoC](https://img.shields.io/badge/State%20Management-Cubit-6C63FF?style=for-the-badge)
-![Hive](https://img.shields.io/badge/Database-Hive-F7C843?style=for-the-badge&logo=hive&logoColor=black)
-
-</div>
+The app allows users to create, edit, delete, and manage their notes locally with a clean and responsive interface.
 
 ---
 
-## 📱 About The Project
+## 📱 Screenshots
 
-**Notes App** is a modern Flutter application designed to provide a simple and intuitive way to create, edit, organize, and delete personal notes.
+<p align="center">
+  <img src="assets/screenshots/splash_view.png" width="180"/>
+  <img src="assets/screenshots/notes_view.png" width="180"/>
+  <img src="assets/screenshots/add_note_view.png" width="180"/>
+</p>
 
-The application uses **Hive** for local data persistence and **Cubit** from the BLoC ecosystem for state management.
-
-The project focuses on writing clean, maintainable, and organized Flutter code while applying real-world concepts such as:
-
-- State Management
-- Local Database
-- CRUD Operations
-- Form Validation
-- Reusable Widgets
-- Code Generation
-- Responsive UI
-- Separation of Responsibilities
-
-The application works completely **offline**, with all notes stored locally on the device.
+<p align="center">
+  <img src="assets/screenshots/adding_note.png" width="180"/>
+  <img src="assets/screenshots/editing_view.png" width="180"/>
+  <img src="assets/screenshots/deleting_view.png" width="180"/>
+</p>
 
 ---
 
 ## ✨ Features
 
-### 📝 Create Notes
-
-Create notes with:
-
-- Title
-- Content
-- Custom color
-- Automatically generated date
-
-The form includes validation to prevent empty notes from being saved.
+- ➕ Add new notes
+- ✏️ Edit existing notes
+- 🗑️ Delete notes
+- 💾 Local data persistence using Hive
+- 🎨 Color-based note cards
+- 📱 Clean and responsive UI
+- ⚡ State management using Cubit
+- 🔄 Loading, success, and failure states
+- 🧩 Organized and maintainable project structure
 
 ---
 
-### 🎨 Custom Note Colors
+## 🛠️ Technologies & Packages
 
-Each note can have its own color.
+| Technology | Usage |
+|---|---|
+| **Flutter** | UI & Application Development |
+| **Dart** | Programming Language |
+| **Hive** | Local Database |
+| **Flutter Bloc / Cubit** | State Management |
+| **Material Design** | UI Components |
+| **Git & GitHub** | Version Control |
 
-The application provides a collection of soft pastel colors that allow users to visually organize their notes.
+---
+
+## 🏗️ Project Structure
 
 ```text
-🔴  🟠  🟡  🟢  🩵  🔵  🟣  🩷  🟤
+lib/
+│
+├── cubits/
+│   ├── add_note_cubit/
+│   │   ├── add_note_cubit.dart
+│   │   └── add_note_state.dart
+│   │
+│   ├── edit_note_cubit/
+│   │   ├── edit_note_cubit.dart
+│   │   └── edit_note_state.dart
+│   │
+│   └── read_notes_cubit/
+│       ├── read_notes_cubit.dart
+│       └── read_notes_state.dart
+│
+├── models/
+│   ├── note_model.dart
+│   └── note_model.g.dart
+│
+├── views/
+│   ├── edit_note_view.dart
+│   └── notes_view.dart
+│
+├── widgets/
+│   ├── add_new_note.dart
+│   ├── add_note_form.dart
+│   ├── custom_app_bar.dart
+│   ├── edit_note_body.dart
+│   ├── note_item.dart
+│   ├── notes_list_view.dart
+│   └── notes_view_body.dart
+│
+├── consts.dart
+├── main.dart
+└── simple_bloc_observer.dart
